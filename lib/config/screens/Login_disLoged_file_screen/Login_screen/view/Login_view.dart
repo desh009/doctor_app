@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:group_app/app/core/theme/app_colors.dart';
 import 'package:group_app/app/core/widgets/custome_button.dart';
 import 'package:group_app/app/reusable_content/sheed/sheed.dart';
 import 'package:group_app/config/Floating_label_text_field/view/floating_label_text_view.dart';
@@ -24,31 +23,24 @@ class LoginScreenView extends GetView<LoginController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 100),
-          
-                RichText(
-                  text: const TextSpan(
+
+                const Padding(
+                  padding: EdgeInsets.only(left: 12),
+                  child: Text(
+                    '            Welcome Back',
                     style: TextStyle(
+                      fontSize: 25,
                       fontFamily: 'Rubik',
+                      fontWeight: FontWeight.w500,
                       color: Colors.black,
-                      height: 1,
                     ),
-                    children: [
-                      TextSpan(
-                        text: '   Welcome Back',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
                   ),
                 ),
-          
+
                 const SizedBox(height: 15),
-          
-                // Subtitle
+
                 const Text(
-                  '     Sign in to continue your learning journey\n              and explore new opportunities',
+                  '         Sign in to continue your learning journey\n                  and explore new opportunities',
                   style: TextStyle(
                     fontSize: 14,
                     fontFamily: 'Rubik',
@@ -57,129 +49,40 @@ class LoginScreenView extends GetView<LoginController> {
                     height: 1.6,
                   ),
                 ),
-          
+
                 const SizedBox(height: 40),
-          
-                // Social Login Buttons
+
+                // --- Social Login Buttons (Same as before) ---
                 Row(
                   children: [
-                    // Google Button
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: controller.loginWithGoogle,
-                        child: Container(
-                          height: 54,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.1),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png',
-                                height: 24,
-                                width: 24,
-                              ),
-                              const SizedBox(width: 10),
-                              const Text(
-                                'Google',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Rubik',
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    _buildSocialButton(
+                      'Google',
+                      'assets/images/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png',
+                      controller.loginWithGoogle,
                     ),
-          
                     const SizedBox(width: 15),
-          
-                    // Facebook Button
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: controller.loginWithFacebook,
-                        child: Container(
-                          height: 54,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.1),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 24,
-                                width: 24,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF1877F2),
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'f',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Rubik',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              const Text(
-                                'Facebook',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Rubik',
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    _buildSocialButton(
+                      'Facebook',
+                      null,
+                      controller.loginWithFacebook,
+                      isFacebook: true,
                     ),
                   ],
                 ),
-          
+
                 const SizedBox(height: 40),
-          
-                // Email Field
-                Obx(
-                  () => SmoothAnimatedTextField(
-                    controller: controller.emailController,
-                    label: 'Email',
-                    textInputAction: TextInputAction.next,
-                    validator: controller.validateEmail,
-                  ),
+
+                // ১. Email Field (Obx রিমুভ করা হয়েছে কারণ controller.obs না হলে এরর দিবে)
+                SmoothAnimatedTextField(
+                  controller: controller.emailController,
+                  label: 'Email',
+                  textInputAction: TextInputAction.next,
+                  validator: controller.validateEmail,
                 ),
-          
+
                 const SizedBox(height: 20),
-          
-                // Password Field
+
+                // ২. Password Field (Obx শুধুমাত্র পাসওয়ার্ড শো/হাইডের জন্য রাখা হয়েছে)
                 Obx(
                   () => SmoothAnimatedTextField(
                     controller: controller.passwordController,
@@ -197,74 +100,45 @@ class LoginScreenView extends GetView<LoginController> {
                     ),
                   ),
                 ),
-          
+
                 const SizedBox(height: 15),
-          
-                // Remember Me & Forgot Password Row
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Row(
-                    children: [
-                      // Remember Me Checkbox
-                      Obx(() => Row(
-                        children: [
-                          Checkbox(
-                            value: controller.rememberMe.value,
-                            onChanged: (value) => controller.toggleRememberMe(),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ),
-                          const Text(
-                            'Remember me',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Rubik',
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
-                      )),
-                      
-                      const Spacer(),
-                      
-                      // Forgot Password
-                      GestureDetector(
-                        onTap: controller.navigateToForgotPasswordScreen,
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'Rubik',
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w500,
-                          ),
+
+                // ৩. Remember Me & Forgot Password
+                Row(
+                  mainAxisAlignment: .center,
+                  children: [
+                    GestureDetector(
+                      onTap: controller.navigateToForgotPasswordScreen,
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Rubik',
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-          
-                const SizedBox(height: 50),
-          
-                // Login Button
-                Obx(
-                  () => SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: CustomElevatedButton(
-                      text: controller.isLoading.value ? 'Logging in...' : 'Login',
-                      onPressed: controller.isFormValid.value && !controller.isLoading.value
-                          ? controller.login
-                          : null,
-                      isLoading: controller.isLoading.value,
                     ),
+                  ],
+                ),
+
+                const SizedBox(height: 50),
+
+                // ৪. Login Button (সম্পূর্ণ ফিক্সড)
+                Obx(
+                  () => CustomElevatedButton(
+                    text: 'Login',
+                    onPressed:
+                        (controller.isFormValid.value &&
+                            !controller.isLoading.value)
+                        ? controller.login
+                        : null,
+                    isLoading: controller.isLoading.value,
                   ),
                 ),
-          
+
                 const SizedBox(height: 16),
-          
-                // Don't have account? Sign Up
+
                 Center(
                   child: GestureDetector(
                     onTap: controller.navigateToSignUp,
@@ -279,10 +153,73 @@ class LoginScreenView extends GetView<LoginController> {
                     ),
                   ),
                 ),
-          
                 const SizedBox(height: 40),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // সোশ্যাল বাটনের জন্য একটি ছোট হেল্পার মেথড
+  Widget _buildSocialButton(
+    String label,
+    String? iconPath,
+    VoidCallback onTap, {
+    bool isFacebook = false,
+  }) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 54,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              isFacebook
+                  ? Container(
+                      height: 24,
+                      width: 24,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1877F2),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'f',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Image.asset(iconPath!, height: 24, width: 24),
+              const SizedBox(width: 10),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Rubik',
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87,
+                ),
+              ),
+            ],
           ),
         ),
       ),

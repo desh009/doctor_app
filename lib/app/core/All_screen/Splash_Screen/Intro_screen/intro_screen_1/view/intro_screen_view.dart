@@ -3,6 +3,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:group_app/app/core/All_screen/Splash_Screen/Intro_screen/intro_screen_2/view/intro_2_view.dart';
+import 'package:group_app/app/core/All_screen/Splash_Screen/Intro_screen/intro_screen_3./binder/intro_screen_3_binder.dart';
+import 'package:group_app/app/core/All_screen/Splash_Screen/Intro_screen/intro_screen_3./view/intro_screen_3_view.dart';
+import 'package:group_app/app/core/helper/share_helper.dart';
 import 'package:group_app/app/core/theme/app_colors.dart';
 import 'package:group_app/app/core/widgets/custome_button.dart';
 
@@ -101,25 +104,29 @@ class OnboardingView extends StatelessWidget {
 
             // Get Started বাটন
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               child: SizedBox(
                 width: double.infinity,
                 height: 55,
                 child: CustomElevatedButton(
-                  text: "Get Started",
+                  text: 'Get Started', // স্ট্রিং সরাসরি নাম দিয়ে পাস করুন
+                  isLoading:
+                      false, // শুরুতে লোডিং false থাকবে যাতে ক্লিক করা যায়
                   onPressed: () {
-                    // Navigate to the next screen
+                    // ১. ইন্ট্রো শেষ হওয়ার ডাটা সেভ করা
+                    ShareHelper.isIntroCompleted = true;
+
+                    // ২. নেভিগেশন
                     Get.to(
-                      () => Intro2View(),
+                      () => const IntroScreen3View(),
                       transition: Transition.rightToLeft,
                       duration: const Duration(milliseconds: 400),
                       curve: Curves.easeInOut,
                     );
-                  }, isLoading: true,
+                  },
                 ),
               ),
             ),
-
             // Skip বাটন
             TextButton(
               onPressed: () {},

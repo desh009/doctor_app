@@ -1,49 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:get/get.dart';
+import 'package:group_app/app/core/helper/share_helper.dart';
+import 'package:group_app/app/core/theme/app_colors.dart';
 import 'package:group_app/app/core/widgets/custome_button.dart';
 import 'package:group_app/config/screens/Login_disLoged_file_screen/Login_screen/view/Login_view.dart';
-import 'package:group_app/config/screens/Login_disLoged_file_screen/Sign_up_Screen/sign_up_screen_view.dart';
-import 'package:group_app/app/core/theme/app_colors.dart';
 
 class IntroScreen3View extends StatelessWidget {
   const IntroScreen3View({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // স্ক্রিনের সাইজ নেওয়ার জন্য
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        // পুরো স্ক্রিনের হালকা গ্রাডিয়েন্ট ব্যাকগ্রাউন্ড
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Colors.white,
-              Color(0xFFE8F5F1), // নিচের দিকে হালকা মিন্ট কালার
-            ],
+            colors: [Colors.white, Color(0xFFE8F5F1)],
           ),
         ),
         child: Column(
           children: [
-            // উপরের ইমেজ এবং কার্ভ সেকশন
             Stack(
               children: [
-                // ১. পিছনের বড় সবুজ গোল শেপ
                 Positioned(
-                  top: -60, // উপরের দিকে অনেকটা বাইরে তুলে দেওয়া
-                  left: -200, // বাম দিকে অনেকটা বাইরে সরিয়ে দেওয়া
+                  top: -60,
+                  left: -200,
                   child: Container(
-                    width: 450, // স্ক্রিনের চেয়েও বড় সাইজ
+                    width: 450,
                     height: 450,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF0EBE7E), // আপনার ছবির গ্রিন কালার
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF0EBE7E),
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -51,14 +40,12 @@ class IntroScreen3View extends StatelessWidget {
                 Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                    margin: const EdgeInsets.only(
-                      top: 150,
-                    ), // উপর থেকে নিচে নামানোর জন্য
-                    width: 320, // ইমেজের সাইজ ছবির মতো বড় করা হয়েছে
+                    margin: const EdgeInsets.only(top: 150),
+                    width: 320,
                     height: 320,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      image: const DecorationImage(
+                      image: DecorationImage(
                         image: AssetImage("assets/images/Ellipse 2154.png"),
                         fit: BoxFit.cover,
                       ),
@@ -67,11 +54,8 @@ class IntroScreen3View extends StatelessWidget {
                 ),
               ],
             ),
-
-            SizedBox(height: 40),
-
-            // টাইটেল
-            Text(
+            const SizedBox(height: 40),
+            const Text(
               "Find Trusted Doctors",
               style: TextStyle(
                 fontFamily: 'Rubik',
@@ -80,11 +64,8 @@ class IntroScreen3View extends StatelessWidget {
                 color: Color(0xFF333333),
               ),
             ),
-
-            SizedBox(height: 15),
-
-            // ডেসক্রিপশন
-            Padding(
+            const SizedBox(height: 15),
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 40),
               child: Text(
                 "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of it over 2000 years old.",
@@ -92,44 +73,47 @@ class IntroScreen3View extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Rubik',
                   fontSize: 14,
-                  color: AppColors.myColor,
+                  color: Colors.black54,
                   height: 1.6,
                 ),
               ),
             ),
-
-            Spacer(),
-
-            // Get Started বাটন
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: SizedBox(
                 width: double.infinity,
                 height: 55,
                 child: CustomElevatedButton(
-                  text: "Get Started",
+                  text: "Get Started", // এখানে Named Parameter হিসেবে text দিন
                   onPressed: () {
-                    Get.to(
-                      () => LoginScreenView(),
+                    // ১. ইন্ট্রো দেখা শেষ তা সেভ করুন
+                    ShareHelper.isIntroCompleted = true;
+
+                    // ২. নেভিগেশন (Get.off ব্যবহার করা ভালো যাতে ব্যাক করলে এখানে না আসে)
+                    Get.off(
+                      () => const LoginScreenView(),
                       transition: Transition.rightToLeft,
                       duration: const Duration(milliseconds: 400),
                       curve: Curves.easeInOut,
                     );
-                  }, isLoading: false,
+                  },
+                  isLoading: false, // isLoading ফিক্সড করা হয়েছে
                 ),
               ),
             ),
 
-            // Skip বাটন
             TextButton(
-              onPressed: () {},
-              child: Text(
+              onPressed: () {
+                ShareHelper.isIntroCompleted = true;
+                Get.off(() => const LoginScreenView());
+              },
+              child: const Text(
                 "Skip",
-                style: TextStyle(fontFamily: 'Rubik', color: AppColors.myColor),
+                style: TextStyle(fontFamily: 'Rubik', color: Colors.teal),
               ),
             ),
-
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
           ],
         ),
       ),

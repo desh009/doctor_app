@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:group_app/app/core/helper/helper.dart';
 import 'package:group_app/app/core/helper/share_helper.dart';
+import 'package:group_app/app/core/routes/app_pages.dart';
 
 class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -10,7 +11,6 @@ class LoginController extends GetxController {
   late TextEditingController emailController;
   late TextEditingController passwordController;
 
-  // Rx Variables
   var isLoading = false.obs;
   var isPasswordVisible = false.obs;
   var rememberMe = false.obs;
@@ -109,8 +109,12 @@ class LoginController extends GetxController {
   void loginWithFacebook() => print("Facebook Login clicked");
 
   // --- নেভিগেশন ---
-  void navigateToSignUp() => Get.toNamed('/signup');
-  void navigateToForgotPasswordScreen() => Get.toNamed('/forgot-password');
+// controller এর ভেতর
+void navigateToSignUp() {
+  Get.toNamed(Routes.SIGN_UP); // এটি সরাসরি '/sign-up' কে কল করবে
+} 
+
+ void navigateToForgotPasswordScreen() => Get.toNamed('/forgot-password');
 
   @override
   void onClose() {
