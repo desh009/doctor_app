@@ -1,0 +1,8 @@
+{
+  "@@locale": "en",
+  "appTitle": "Doctor App",
+  "welcome": "Welcome",
+  "login": "Login",
+  "email": "Email",
+  "password": "Password"
+}
