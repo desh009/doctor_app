@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:group_app/app/core/theme/app_colors.dart';
 import 'package:group_app/app/core/widgets/custome_button.dart';
 import 'package:group_app/app/reusable_content/sheed/sheed.dart';
 import 'package:group_app/config/Floating_label_text_field/view/floating_label_text_view.dart';
@@ -101,28 +102,7 @@ class LoginScreenView extends GetView<LoginController> {
                   ),
                 ),
 
-                const SizedBox(height: 15),
-
-                // ৩. Remember Me & Forgot Password
-                Row(
-                  mainAxisAlignment: .center,
-                  children: [
-                    GestureDetector(
-                      onTap: controller.navigateToForgotPasswordScreen,
-                      child: const Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Rubik',
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
 
                 // ৪. Login Button (সম্পূর্ণ ফিক্সড)
                 Obx(
@@ -136,8 +116,28 @@ class LoginScreenView extends GetView<LoginController> {
                     isLoading: controller.isLoading.value,
                   ),
                 ),
+                const SizedBox(height: 20),
 
-                const SizedBox(height: 16),
+                // ৩. Remember Me & Forgot Password
+                Row(
+                  mainAxisAlignment: .center,
+                  children: [
+                    GestureDetector(
+                      onTap: controller.showForgotPasswordBottmSheet,
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Rubik',
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 116),
 
                 Center(
                   child: GestureDetector(
@@ -147,7 +147,7 @@ class LoginScreenView extends GetView<LoginController> {
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Rubik',
-                        color: Colors.blue,
+                        color: AppColors.primaryColor,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -225,4 +225,6 @@ class LoginScreenView extends GetView<LoginController> {
       ),
     );
   }
+
+  
 }
