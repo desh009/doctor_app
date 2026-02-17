@@ -118,7 +118,7 @@ class OnboardingView extends StatelessWidget {
 
                     // ২. নেভিগেশন
                     Get.to(
-                      () => const IntroScreen3View(),
+                      () => const Intro2View(),
                       transition: Transition.rightToLeft,
                       duration: const Duration(milliseconds: 400),
                       curve: Curves.easeInOut,

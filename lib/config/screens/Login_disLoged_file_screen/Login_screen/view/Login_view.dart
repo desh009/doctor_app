@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:group_app/app/core/All_screen/widgets/Sceens/Home_screen/view/home_screen_view.dart';
 import 'package:group_app/app/core/theme/app_colors.dart';
 import 'package:group_app/app/core/widgets/custome_button.dart';
 import 'package:group_app/app/reusable_content/sheed/sheed.dart';
 import 'package:group_app/config/Floating_label_text_field/view/floating_label_text_view.dart';
 import 'package:group_app/config/screens/Login_disLoged_file_screen/Login_screen/controller/Login_controller.dart';
 
-class LoginScreenView extends GetView<LoginController> {
-  const LoginScreenView({super.key});
-
-  @override
-  LoginController get controller => Get.put(LoginController());
+class LoginScreenView extends StatelessWidget {
+  LoginScreenView({super.key});
+  final LoginController controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,6 @@ class LoginScreenView extends GetView<LoginController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 100),
-
                 const Padding(
                   padding: EdgeInsets.only(left: 12),
                   child: Text(
@@ -37,9 +35,7 @@ class LoginScreenView extends GetView<LoginController> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 15),
-
                 const Text(
                   '         Sign in to continue your learning journey\n                  and explore new opportunities',
                   style: TextStyle(
@@ -50,10 +46,8 @@ class LoginScreenView extends GetView<LoginController> {
                     height: 1.6,
                   ),
                 ),
-
                 const SizedBox(height: 40),
 
-                // --- Social Login Buttons (Same as before) ---
                 Row(
                   children: [
                     _buildSocialButton(
@@ -73,7 +67,7 @@ class LoginScreenView extends GetView<LoginController> {
 
                 const SizedBox(height: 40),
 
-                // ১. Email Field (Obx রিমুভ করা হয়েছে কারণ controller.obs না হলে এরর দিবে)
+                // ✅ Email Field (সরাসরি)
                 SmoothAnimatedTextField(
                   controller: controller.emailController,
                   label: 'Email',
@@ -83,62 +77,74 @@ class LoginScreenView extends GetView<LoginController> {
 
                 const SizedBox(height: 20),
 
-                // ২. Password Field (Obx শুধুমাত্র পাসওয়ার্ড শো/হাইডের জন্য রাখা হয়েছে)
-                Obx(
-                  () => SmoothAnimatedTextField(
-                    controller: controller.passwordController,
-                    label: 'Password',
-                    isPassword: !controller.isPasswordVisible.value,
-                    textInputAction: TextInputAction.done,
-                    validator: controller.validatePassword,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        controller.isPasswordVisible.value
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: controller.togglePasswordVisibility,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                // ৪. Login Button (সম্পূর্ণ ফিক্সড)
-                Obx(
-                  () => CustomElevatedButton(
-                    text: 'Login',
-                    onPressed:
-                        (controller.isFormValid.value &&
-                            !controller.isLoading.value)
-                        ? controller.login
-                        : null,
-                    isLoading: controller.isLoading.value,
-                  ),
-                ),
-                const SizedBox(height: 20),
-
-                // ৩. Remember Me & Forgot Password
-                Row(
-                  mainAxisAlignment: .center,
-                  children: [
-                    GestureDetector(
-                      onTap: controller.showForgotPasswordBottmSheet,
-                      child: const Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Rubik',
-                          color: AppColors.primaryColor,
-                          fontWeight: FontWeight.w500,
+                // ✅ Password Field (StatefulBuilder ব্যবহার)
+                StatefulBuilder(
+                  builder: (context, setState) {
+                    return SmoothAnimatedTextField(
+                      controller: controller.passwordController,
+                      label: 'Password',
+                      isPassword: !controller.isPasswordVisible.value,
+                      textInputAction: TextInputAction.done,
+                      validator: controller.validatePassword,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          controller.isPasswordVisible.value
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                         ),
+                        onPressed: () {
+                          controller.togglePasswordVisibility();
+                          setState(() {}); // UI রিফ্রেশ
+                        },
+                      ),
+                    );
+                  },
+                ),
+
+                const SizedBox(height: 20),
+
+                // ✅ Login Button (GetBuilder ব্যবহার)
+                GetBuilder<LoginController>(
+                  id: 'login_button', // Optional ID
+                  builder: (controller) {
+                    return CustomElevatedButton(
+                      text: 'Login',
+                      onPressed: controller.isLoading.value
+                          ? null
+                          : () {
+                              Get.to(
+                                () => const DoctorHomepage(),
+                                transition: Transition.rightToLeft,
+                                duration: const Duration(milliseconds: 400),
+                                curve: Curves.easeInOut,
+                              );
+                            },
+                      isLoading: controller.isLoading.value,
+                    );
+                  },
+                ),
+
+                const SizedBox(height: 20),
+
+                // Forgot Password
+                GestureDetector(
+                  onTap: () => controller.showForgotPasswordBottmSheet(context),
+                  child: const Center(
+                    child: Text(
+                      'Forgot Password?',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'Rubik',
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                  ],
+                  ),
                 ),
 
                 const SizedBox(height: 116),
 
+                // Sign Up
                 Center(
                   child: GestureDetector(
                     onTap: controller.navigateToSignUp,
@@ -162,7 +168,6 @@ class LoginScreenView extends GetView<LoginController> {
     );
   }
 
-  // সোশ্যাল বাটনের জন্য একটি ছোট হেল্পার মেথড
   Widget _buildSocialButton(
     String label,
     String? iconPath,
@@ -189,26 +194,27 @@ class LoginScreenView extends GetView<LoginController> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              isFacebook
-                  ? Container(
-                      height: 24,
-                      width: 24,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF1877F2),
-                        borderRadius: BorderRadius.circular(4),
+              if (isFacebook)
+                Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1877F2),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'f',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
-                      child: const Center(
-                        child: Text(
-                          'f',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    )
-                  : Image.asset(iconPath!, height: 24, width: 24),
+                    ),
+                  ),
+                )
+              else if (iconPath != null)
+                Image.asset(iconPath, height: 24, width: 24),
               const SizedBox(width: 10),
               Text(
                 label,
@@ -225,6 +231,4 @@ class LoginScreenView extends GetView<LoginController> {
       ),
     );
   }
-
-  
 }

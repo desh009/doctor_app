@@ -1,15 +1,37 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:get/get.dart'; // ✅ GetX import করুন
+import 'package:get/get.dart';
 import 'package:group_app/app/core/helper/share_helper.dart';
-import 'package:group_app/app/core/routes/app_pages.dart'; // ✅ AppPages import
+import 'package:group_app/app/core/routes/app_pages.dart';
+import 'package:group_app/app/firebase_fcm/fcm_service.dart';
+import 'package:group_app/app/firebase_fcm/firebase_options.dart';
 import 'package:group_app/l10n/app_localizations.dart';
 
-void main()  async {
-WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-await ShareHelper.init();
+  try {
+    // ✅ চেক করুন Firebase ইতিমধ্যে initialized কিনা
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } else {
+      print('Firebase already initialized');
+    }
+  } catch (e) {
+    print('Firebase initialization error: $e');
+  }
 
+  try {
+    await FcmService().init();
+    print(await FcmService().getFcmToken());
+  } catch (e) {
+    print('FCM initialization error: $e');
+  }
+
+  await ShareHelper.init();
 
   runApp(MyApp());
 }
@@ -17,11 +39,10 @@ await ShareHelper.init();
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp( // ✅ MaterialApp এর পরিবর্তে GetMaterialApp
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Doctor App',
       
-      // ✅ Localization
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -34,14 +55,11 @@ class MyApp extends StatelessWidget {
       ],
       locale: Locale('bn'),
       
-      // ✅ GetX Routing Configuration
-      initialRoute: AppPages.INITIAL, // '/splash'
-      getPages: AppPages.routes, // আপনার routes list
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
       
-      // ✅ Optional: Custom transition
       defaultTransition: Transition.fade,
       transitionDuration: Duration(milliseconds: 300),
- // home: SplashScreen(), // Remove this line
     );
   }
 }

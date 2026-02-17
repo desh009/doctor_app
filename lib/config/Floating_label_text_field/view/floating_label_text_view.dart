@@ -6,6 +6,7 @@ class SmoothAnimatedTextField extends StatefulWidget {
   final String label;
   final bool isPassword;
   final String? Function(String?)? validator;
+
   final TextInputAction textInputAction;
   final Function(String)? onFieldSubmitted; 
   final TextInputType? keyboardType; // ✅ নতুন লাইন যোগ করুন

@@ -25,6 +25,9 @@ dependencies:
   logger: ^2.6.2
   google_fonts: ^7.0.0
   pin_code_fields: ^8.0.1
+  cloud_firestore: ^6.1.2
+  firebase_messaging: ^16.1.1
+  firebase_core: ^4.4.0
 
 dev_dependencies:
   flutter_test:

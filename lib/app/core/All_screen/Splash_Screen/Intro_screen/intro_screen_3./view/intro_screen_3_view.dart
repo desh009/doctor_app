@@ -92,7 +92,7 @@ class IntroScreen3View extends StatelessWidget {
 
                     // ২. নেভিগেশন (Get.off ব্যবহার করা ভালো যাতে ব্যাক করলে এখানে না আসে)
                     Get.off(
-                      () => const LoginScreenView(),
+                      () =>  LoginScreenView(),
                       transition: Transition.rightToLeft,
                       duration: const Duration(milliseconds: 400),
                       curve: Curves.easeInOut,
@@ -106,7 +106,7 @@ class IntroScreen3View extends StatelessWidget {
             TextButton(
               onPressed: () {
                 ShareHelper.isIntroCompleted = true;
-                Get.off(() => const LoginScreenView());
+                Get.off(() =>  LoginScreenView());
               },
               child: const Text(
                 "Skip",
