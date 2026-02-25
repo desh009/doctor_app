@@ -8,6 +8,7 @@ import 'package:group_app/app/core/All_screen/Splash_Screen/Intro_screen/intro_s
 import 'package:group_app/app/core/All_screen/Splash_Screen/Intro_screen/intro_screen_3./view/intro_screen_3_view.dart';
 import 'package:group_app/app/core/All_screen/Splash_Screen/binder/splash_binder.dart';
 import 'package:group_app/app/core/All_screen/Splash_Screen/view/splash_view.dart';
+import 'package:group_app/app/core/All_screen/widgets/Sceens/Home_screen/binder/home_screen_binder.dart';
 import 'package:group_app/app/core/All_screen/widgets/Sceens/Home_screen/view/home_screen_view.dart';
 import 'package:group_app/config/screens/Login_disLoged_file_screen/Login_screen/binder/login_binder.dart';
 import 'package:group_app/config/screens/Login_disLoged_file_screen/Login_screen/view/Login_view.dart';
@@ -73,7 +74,9 @@ class AppPages {
     // ),
     GetPage(
       name: _Paths.HOME,
-      page: () => const DoctorHomepage(),
+      page: () =>  DoctorHomepage(),
+      // binding: HomeBinding(),
+      
       // binding: NotificationBinding(),
     ),
     // GetPage(

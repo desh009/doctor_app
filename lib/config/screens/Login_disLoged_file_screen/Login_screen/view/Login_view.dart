@@ -113,7 +113,7 @@ class LoginScreenView extends StatelessWidget {
                           ? null
                           : () {
                               Get.to(
-                                () => const DoctorHomepage(),
+                                () =>  DoctorHomepage(),
                                 transition: Transition.rightToLeft,
                                 duration: const Duration(milliseconds: 400),
                                 curve: Curves.easeInOut,
