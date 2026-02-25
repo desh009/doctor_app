@@ -6,10 +6,12 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const SPLASH = _Paths.SPLASH;
   static const INTRO = _Paths.INTRO;
-    static const INTRO2 = _Paths.INTRO2;
-    static const INTRO3 = _Paths.INTRO3;
-  static const SIGN_UP =_Paths.SIGN_UP;
-    static const LOGIN =_Paths.LOGIN;
+  static const INTRO2 = _Paths.INTRO2;
+  static const INTRO3 = _Paths.INTRO3;
+  static const SIGN_UP = _Paths.SIGN_UP;
+  static const LOGIN = _Paths.LOGIN;
+
+  static const FIND_TEETH_DOCTOR = _Paths.FIND_TEETH_DOCTOR;
   static const AUTH = _Paths.AUTH;
   static const MAIN_LAYOUT = _Paths.MAIN_LAYOUT;
   static const NOTIFICATION = _Paths.NOTIFICATION;
@@ -34,10 +36,10 @@ abstract class _Paths {
   static const HOME = '/home';
   static const SPLASH = '/splash';
   static const INTRO = '/intro';
-    static const INTRO2 = '/intro2';
-    static const INTRO3 = '/intro3';
-    static const SIGN_UP = '/sign-up';
-static const LOGIN = '/login';
+  static const INTRO2 = '/intro2';
+  static const INTRO3 = '/intro3';
+  static const SIGN_UP = '/sign-up';
+  static const LOGIN = '/login';
   static const AUTH = '/auth';
   static const MAIN_LAYOUT = '/main-layout';
   static const NOTIFICATION = '/notification';
@@ -55,4 +57,6 @@ static const LOGIN = '/login';
   static const EMAIL_VALIDATION = '/email-validation';
   static const FORGOT_PASSWORD = '/forgot-password';
   static const CHANGE_PASSWORD = '/change-password';
+
+  static const FIND_TEETH_DOCTOR = '/find-teeth-doctor';
 }

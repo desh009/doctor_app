@@ -10,6 +10,7 @@ import 'package:group_app/app/core/All_screen/Splash_Screen/binder/splash_binder
 import 'package:group_app/app/core/All_screen/Splash_Screen/view/splash_view.dart';
 import 'package:group_app/app/core/All_screen/widgets/Sceens/Home_screen/binder/home_screen_binder.dart';
 import 'package:group_app/app/core/All_screen/widgets/Sceens/Home_screen/view/home_screen_view.dart';
+import 'package:group_app/app/core/All_screen/widgets/Sceens/find_tooth_doctors_screen/view/find_tooth_doctor_view.dart';
 import 'package:group_app/config/screens/Login_disLoged_file_screen/Login_screen/binder/login_binder.dart';
 import 'package:group_app/config/screens/Login_disLoged_file_screen/Login_screen/view/Login_view.dart';
 import 'package:group_app/config/screens/Login_disLoged_file_screen/Sign_up_Screen/sign_up_screen_binder.dart';
@@ -75,15 +76,16 @@ class AppPages {
     GetPage(
       name: _Paths.HOME,
       page: () =>  DoctorHomepage(),
-      // binding: HomeBinding(),
-      
+      binding: HomeBinding(),
+      transition: Transition.rightToLeft,
+       // ✅ এখানে দিন      
       // binding: NotificationBinding(),
     ),
-    // GetPage(
-    //   name: _Paths.HISTORY,
-    //   page: () => const HistoryView(),
-    //   binding: HistoryBinding(),
-    // ),
+    GetPage(
+      name: _Paths.FIND_TEETH_DOCTOR,
+      page: () => const FindDoctorScreen(),
+      // binding: FindToothDoctorBinding(),
+    ),
     // GetPage(
     //   name: _Paths.SETTINGS,
     //   page: () => const SettingsView(),
