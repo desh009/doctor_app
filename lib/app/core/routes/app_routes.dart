@@ -12,6 +12,9 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
 
   static const FIND_TEETH_DOCTOR = _Paths.FIND_TEETH_DOCTOR;
+static const BOOK_DOCTOR = _Paths.BOOK_DOCTOR;
+
+
   static const AUTH = _Paths.AUTH;
   static const MAIN_LAYOUT = _Paths.MAIN_LAYOUT;
   static const NOTIFICATION = _Paths.NOTIFICATION;
@@ -59,4 +62,5 @@ abstract class _Paths {
   static const CHANGE_PASSWORD = '/change-password';
 
   static const FIND_TEETH_DOCTOR = '/find-teeth-doctor';
+  static const BOOK_DOCTOR = '/book-doctor';
 }
