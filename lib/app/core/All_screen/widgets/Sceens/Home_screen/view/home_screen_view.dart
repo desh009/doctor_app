@@ -231,100 +231,92 @@ class HomeViewContent extends StatelessWidget {
   }
 
   // ============= সমাধানকৃত ক্যাটাগরি সেকশন =============
-  Widget _buildCategories() {
-    final List<Map<String, dynamic>> cats = [
-      {
-        "icon": Icons.medical_services,
-        "color": const Color(0xFF516CF0),
-        "title": "Dentist",
-      },
-      {
-        "icon": Icons.favorite,
-        "color": AppColors.primaryColor,
-        "title": "Cardiologist",
-      },
-      {
-        "icon": Icons.visibility,
-        "color": const Color(0xFFFEB059),
-        "title": "Eye Specialist",
-      },
-      {
-        "icon": Icons.accessibility_new,
-        "color": const Color(0xFFFF5C5C),
-        "title": "Physiotherapist",
-      },
-    ];
+  // HomeViewContent-এর _buildCategories মেথড আপডেট করুন
+Widget _buildCategories() {
+  final List<Map<String, dynamic>> cats = [
+    {
+      "icon": Icons.medical_services,
+      "color": const Color(0xFF516CF0),
+      "title": "Dentist",
+    },
+    {
+      "icon": Icons.favorite,
+      "color": AppColors.primaryColor,
+      "title": "Cardiologist",
+    },
+    {
+      "icon": Icons.visibility,
+      "color": const Color(0xFFFEB059),
+      "title": "Eye Specialist",
+    },
+    {
+      "icon": Icons.accessibility_new,
+      "color": const Color(0xFFFF5C5C),
+      "title": "Physiotherapist",
+    },
+  ];
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Categories",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Categories",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            GestureDetector(
+              onTap: () {
+                // সব ক্যাটাগরি দেখাতে পাঠানো (কোনো ফিল্টার ছাড়া)
+                Get.to(() => const FindDoctorScreen());
+              },
+              child: const Text(
+                "See all >",
+                style: TextStyle(color: AppColors.grey_sio, fontSize: 12),
               ),
-              GestureDetector(
-                onTap: () {
-                  Get.to(() => const FindDoctorScreen());
-                },
-                child: const Text(
-                  "See all >",
-                  style: TextStyle(color: AppColors.grey_sio, fontSize: 12),
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: cats.map((c) {
+            return GestureDetector(
+              onTap: () {
+                // নির্দিষ্ট ক্যাটাগরির ডাক্তার দেখাতে পাঠানো
+                Get.to(() => FindDoctorScreen(
+                  initialCategory: c['title'] as String,
+                ));
+              },
+              child: Container(
+                padding: const EdgeInsets.all(18),
+                decoration: BoxDecoration(
+                  color: c['color'],
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: (c['color'] as Color).withOpacity(0.3),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  c['icon'] as IconData,
+                  color: Colors.white,
+                  size: 28,
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: cats.map((c) {
-              return GestureDetector(
-                onTap: () {
-                  // সমাধান ১: সরাসরি FindDoctorScreen এ যাওয়া
-                  Get.to(() => const FindDoctorScreen());
-                  
-                  // সমাধান ২: যদি ক্যাটাগরি অনুযায়ী আলাদা পৃষ্ঠা দেখাতে চান
-                  // Get.to(() => CategoryDoctorsScreen(category: c['title']));
-                  
-                  // সমাধান ৩: Snackbar দেখানো (টেস্টিং এর জন্য)
-                  // Get.snackbar(
-                  //   'Category Selected',
-                  //   'You selected ${c['title']}',
-                  //   snackPosition: SnackPosition.BOTTOM,
-                  //   backgroundColor: c['color'],
-                  //   colorText: Colors.white,
-                  // );
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(18),
-                  decoration: BoxDecoration(
-                    color: c['color'],
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: (c['color'] as Color).withOpacity(0.3),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: Icon(
-                    c['icon'] as IconData,
-                    color: Colors.white,
-                    size: 28,
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        ],
-      ),
-    );
-  }
+            );
+          }).toList(),
+        ),
+      ],
+    ),
+  );
+}
 
   Widget _buildPopularDoctors() {
     return SizedBox(
